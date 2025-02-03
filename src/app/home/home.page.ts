@@ -115,4 +115,9 @@ export class HomePage implements OnInit {
   insertarTarea() {
     this.navCtrl.navigateForward('/tareas'); // Navega a la ruta 'tareas'
   }
+  // Método para abrir la página de proyectos
+  insertarProyecto() {
+    this.navCtrl.navigateForward('/proyectos'); // Navega a la ruta 'proyectos'
+  }
+
 }

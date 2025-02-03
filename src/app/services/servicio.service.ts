@@ -8,16 +8,14 @@ import { firstValueFrom } from 'rxjs';
   providedIn: 'root',
 })
 export class ServicioService {
-   server: string = 'http://localhost/BDDPrueba2/controllers/tareas.controller.php?';
+  server: string = 'http://localhost/BDDPrueba2/controllers/tareas.controller.php?';
 
   constructor(public toastCtrl: ToastController, public http: HttpClient) {}
 
   // 🔹 Método para enviar datos al servidor (POST request)
   async postData(body: any) {
     let head = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
-    let options = { headers: head,
-
-     };
+    let options = { headers: head };
 
     try {
       const response = await firstValueFrom(this.http.post(this.server, JSON.stringify(body), options));
@@ -67,7 +65,38 @@ export class ServicioService {
     let datos = { op: 'deleteTarea', idtarea };
     return await this.postData(datos);
   }
+// 🔹 Insertar nuevo proyecto
+async insertarProyecto(nombreproyecto: string, fechaproyecto: string, estadoproyecto: string, materiaproyecto: string, documentosproyecto: string) {
+  let datos = {
+    op: 'insertProyecto',
+    nombreproyecto,
+    fechaproyecto,
+    estadoproyecto,
+    materiaproyecto,
+    documentosproyecto
+  };
+  return await this.postData(datos);
+}
 
+// 🔹 Actualizar proyecto
+async actualizarProyecto(idproyecto: number, nombreproyecto: string, fechaproyecto: string, estadoproyecto: string, materiaproyecto: string, documentosproyecto: string) {
+  let datos = {
+    op: 'updateProyecto',
+    idproyecto,
+    nombreproyecto,
+    fechaproyecto,
+    estadoproyecto,
+    materiaproyecto,
+    documentosproyecto
+  };
+  return await this.postData(datos);
+}
+
+// 🔹 Eliminar proyecto
+async eliminarProyecto(idproyecto: number) {
+  let datos = { op: 'deleteProyecto', idproyecto };
+  return await this.postData(datos);
+}
   // 🔹 Mostrar mensaje de notificación
   async showToast(msg: string, showtime: number) {
     const toast = await this.toastCtrl.create({

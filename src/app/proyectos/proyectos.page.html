@@ -1,13 +1,54 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>proyectos</ion-title>
+    <ion-title>Registrar Proyecto</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">proyectos</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <!-- Nombre del Proyecto -->
+  <ion-item>
+    <ion-label>Nombre del Proyecto:</ion-label>
+    <ion-input type="text" [(ngModel)]="nombreproyecto"></ion-input>
+  </ion-item>
+
+  <!-- Fecha del Proyecto -->
+  <ion-item>
+    <ion-label>Fecha del Proyecto:</ion-label>
+    <ion-input type="date" [(ngModel)]="fechaproyecto"></ion-input>
+  </ion-item>
+
+  <!-- Estado del Proyecto -->
+  <ion-item>
+    <ion-label>Estado:</ion-label>
+    <ion-select [(ngModel)]="estadoproyecto">
+      <ion-select-option value="pendiente">Pendiente</ion-select-option>
+      <ion-select-option value="en_progreso">En Progreso</ion-select-option>
+      <ion-select-option value="completado">Completado</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Materia del Proyecto -->
+  <ion-item>
+    <ion-label>Materia:</ion-label>
+    <ion-input type="text" [(ngModel)]="materiaproyecto"></ion-input>
+  </ion-item>
+
+  <!-- Documentos del Proyecto -->
+  <ion-item>
+    <ion-label>Documentos:</ion-label>
+    <ion-input type="text" [(ngModel)]="documentosproyecto"></ion-input>
+  </ion-item>
+
+  <!-- Botones de acción -->
+  <ion-item>
+    <!-- Botón Cancelar -->
+    <ion-button fill="clear" (click)="cancelar()" style="margin-right: 15px; --background: transparent; --box-shadow: none;">
+      <img src="assets/img/cancelbtn.png" alt="Cancelar" style="width: 40px; height: 40px;">
+    </ion-button>
+
+    <!-- Botón Registrar -->
+    <ion-button fill="clear" (click)="insertarProyecto()" style="--background: transparent; --box-shadow: none;">
+      <img src="assets/img/checkbtn.png" alt="Registrar" style="width: 40px; height: 40px;">
+    </ion-button>
+  </ion-item>
 </ion-content>

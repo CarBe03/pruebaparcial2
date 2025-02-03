@@ -6,6 +6,7 @@
 
 <ion-content [fullscreen]="true">
   <div id="contenedor">
+    <!-- Card para Insertar Nueva Tarea -->
     <ion-card color="dark">
       <ion-card-header>
         <ion-card-title class="etiqueta">Insertar Nueva Tarea</ion-card-title>
@@ -14,6 +15,20 @@
         <ion-item>
           <ion-button expand="block" color="success" (click)="insertarTarea()">
             Insertar Tarea
+          </ion-button>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Card para Insertar Nuevo Proyecto -->
+    <ion-card color="dark">
+      <ion-card-header>
+        <ion-card-title class="etiqueta">Insertar Nuevo Proyecto</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-button expand="block" color="primary" (click)="insertarProyecto()">
+            Insertar Proyecto
           </ion-button>
         </ion-item>
       </ion-card-content>
