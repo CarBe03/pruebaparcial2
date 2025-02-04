@@ -7,13 +7,16 @@
 <ion-content [fullscreen]="true">
   <!-- Nombre del Proyecto -->
   <ion-item>
-    <ion-label>Nombre del Proyecto:</ion-label>
+
+    
+    <ion-label position="stacked">Nombre del Proyecto:</ion-label>
     <ion-input type="text" [(ngModel)]="nombreproyecto"></ion-input>
   </ion-item>
 
   <!-- Fecha del Proyecto -->
   <ion-item>
-    <ion-label>Fecha del Proyecto:</ion-label>
+
+    <ion-label position="stacked">Fecha del Proyecto:</ion-label>
     <ion-input type="date" [(ngModel)]="fechaproyecto"></ion-input>
   </ion-item>
 
@@ -42,7 +45,7 @@
   <!-- Botones de acción -->
   <ion-item>
     <!-- Botón Cancelar -->
-    <ion-button fill="clear" (click)="cancelar()" style="margin-right: 15px; --background: transparent; --box-shadow: none;">
+    <ion-button fill="clear" (click)="cancel()" style="margin-right: 15px; --background: transparent; --box-shadow: none;">
       <img src="assets/img/cancelbtn.png" alt="Cancelar" style="width: 40px; height: 40px;">
     </ion-button>
 

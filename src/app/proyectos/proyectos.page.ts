@@ -15,6 +15,7 @@ import {
   IonItemDivider,
   IonSelect,
   IonSelectOption,
+  NavController,
   IonList,
   IonCard,
 } from '@ionic/angular/standalone';
@@ -55,16 +56,17 @@ export class ProyectosPage implements OnInit {
 
   constructor(
     private servicio: ServicioService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private navCtrl: NavController
   ) {}
 
   ngOnInit() {
     this.obtenerProyectos();
   }
 
-  cancelar() {
+ /* cancelar() {
     this.modalCtrl.dismiss();
-  }
+  }*/
 
   // 🔹 Obtener todos los proyectos
   async obtenerProyectos() {
@@ -118,7 +120,9 @@ export class ProyectosPage implements OnInit {
       this.servicio.showToast('Error al conectar con el servidor', 2000);
     }
   }
-
+  cancel() {
+    this.navCtrl.navigateBack('/home');
+  }
   // 🔹 Actualizar un proyecto existente
   async actualizarProyecto() {
     if (

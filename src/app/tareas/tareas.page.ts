@@ -15,6 +15,7 @@ import {
   IonItemDivider,
   IonSelect,
   IonSelectOption,
+  NavController,
   IonList,
   IonCard
 } from '@ionic/angular/standalone';
@@ -42,14 +43,16 @@ export class TareasPage implements OnInit {
 
   constructor(
     private servicio: ServicioService,
-    private modalCtrl: ModalController) {}
+    private modalCtrl: ModalController,
+    private navCtrl: NavController
+  ) {}
 
   ngOnInit() {
     this.obtenerTareas();
   }
 
 cancelar() {
-  this.modalCtrl.dismiss();
+  this.navCtrl.navigateBack('/home');
 }
   // 🔹 Obtener todas las tareas
   async obtenerTareas() {

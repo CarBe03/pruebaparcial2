@@ -6,14 +6,21 @@
 
 <ion-content [fullscreen]="true">
   <ion-item>
-    <ion-label>Nombre de la Tarea:</ion-label>
+  
+    <ion-label position="stacked">Nombre de la Tarea:</ion-label>
     <ion-input type="text" [(ngModel)]="nombretarea"></ion-input>
   </ion-item>
-
-  <ion-item>
+<!--fecha-->
+<!-- <ion-item>
     <ion-label>Fecha de la Tarea:</ion-label>
     <ion-input type="date" [(ngModel)]="fechatarea"></ion-input>
+  </ion-item>-->
+  <ion-item>
+    <ion-label position="stacked">Fecha de la Tarea:</ion-label>
+    <ion-input type="date" [(ngModel)]="fechatarea"></ion-input>
   </ion-item>
+  
+<!--fecha-->
 
   <ion-item>
     <ion-label>Estado:</ion-label>
