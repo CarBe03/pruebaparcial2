@@ -5,53 +5,78 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!-- Nombre del Proyecto -->
-  <ion-item>
+  <!-- Lista de Proyectos -->
+  <ion-card color="light">
+    <ion-card-header>
+      <ion-card-title>Lista de Proyectos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let proyecto of proyectos">
+          <ion-label>
+            {{ proyecto.nombreproyecto }} - {{ proyecto.estadoproyecto }}
+          </ion-label>
+          <ion-button color="warning" (click)="seleccionarProyecto(proyecto)">✏️ Editar</ion-button>
 
-    
-    <ion-label position="stacked">Nombre del Proyecto:</ion-label>
-    <ion-input type="text" [(ngModel)]="nombreproyecto"></ion-input>
-  </ion-item>
+          <ion-button color="danger" (click)="eliminarProyecto(proyecto.idproyecto)">🗑️ Eliminar</ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 
-  <!-- Fecha del Proyecto -->
-  <ion-item>
+  <!-- Formulario para Insertar/Editar Proyecto -->
+  <ion-card color="primary">
+    <ion-card-header>
+      <ion-card-title>{{ idproyecto ? 'Editar Proyecto' : 'Nuevo Proyecto' }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- Nombre del Proyecto -->
+      <ion-item>
+        <ion-label position="stacked">Nombre del Proyecto:</ion-label>
+        <ion-input type="text" [(ngModel)]="nombreproyecto"></ion-input>
+      </ion-item>
 
-    <ion-label position="stacked">Fecha del Proyecto:</ion-label>
-    <ion-input type="date" [(ngModel)]="fechaproyecto"></ion-input>
-  </ion-item>
+      <!-- Fecha del Proyecto -->
+      <ion-item>
+        <ion-label position="stacked">Fecha del Proyecto:</ion-label>
+        <ion-input type="date" [(ngModel)]="fechaproyecto"></ion-input>
+      </ion-item>
 
-  <!-- Estado del Proyecto -->
-  <ion-item>
-    <ion-label>Estado:</ion-label>
-    <ion-select [(ngModel)]="estadoproyecto">
-      <ion-select-option value="pendiente">Pendiente</ion-select-option>
-      <ion-select-option value="en_progreso">En Progreso</ion-select-option>
-      <ion-select-option value="completado">Completado</ion-select-option>
-    </ion-select>
-  </ion-item>
+      <!-- Estado del Proyecto -->
+      <ion-item>
+        <ion-label>Estado:</ion-label>
+        <ion-select [(ngModel)]="estadoproyecto">
+          <ion-select-option value="pendiente">Pendiente</ion-select-option>
+          <ion-select-option value="en_progreso">En Progreso</ion-select-option>
+          <ion-select-option value="completado">Completado</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-  <!-- Materia del Proyecto -->
-  <ion-item>
-    <ion-label>Materia:</ion-label>
-    <ion-input type="text" [(ngModel)]="materiaproyecto"></ion-input>
-  </ion-item>
+      <!-- Materia del Proyecto -->
+      <ion-item>
+        <ion-label>Materia:</ion-label>
+        <ion-input type="text" [(ngModel)]="materiaproyecto"></ion-input>
+      </ion-item>
 
-  <!-- Documentos del Proyecto -->
-  <ion-item>
-    <ion-label>Documentos:</ion-label>
-    <ion-input type="text" [(ngModel)]="documentosproyecto"></ion-input>
-  </ion-item>
+      <!-- Documentos del Proyecto -->
+      <ion-item>
+        <ion-label>Documentos:</ion-label>
+        <ion-input type="text" [(ngModel)]="documentosproyecto"></ion-input>
+      </ion-item>
 
-  <!-- Botones de acción -->
-  <ion-item>
-    <!-- Botón Cancelar -->
-    <ion-button fill="clear" (click)="cancel()" style="margin-right: 15px; --background: transparent; --box-shadow: none;">
-      <img src="assets/img/cancelbtn.png" alt="Cancelar" style="width: 40px; height: 40px;">
-    </ion-button>
+      <!-- Botones de acción -->
+      <ion-item>
+        <!-- Botón Cancelar -->
+        <ion-button fill="clear" (click)="cancel()" style="margin-right: 15px; --background: transparent; --box-shadow: none;">
+          <img src="assets/img/cancelbtn.png" alt="Cancelar" style="width: 40px; height: 40px;">
+        </ion-button>
 
-    <!-- Botón Registrar -->
-    <ion-button fill="clear" (click)="insertarProyecto()" style="--background: transparent; --box-shadow: none;">
-      <img src="assets/img/checkbtn.png" alt="Registrar" style="width: 40px; height: 40px;">
-    </ion-button>
-  </ion-item>
+        <!-- Botón Guardar/Actualizar -->
+        <ion-button fill="clear" (click)="idproyecto ? actualizarProyecto() : insertarProyecto()" 
+                    style="--background: transparent; --box-shadow: none;">
+          <img src="assets/img/checkbtn.png" alt="Guardar" style="width: 40px; height: 40px;">
+        </ion-button>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

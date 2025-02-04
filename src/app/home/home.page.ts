@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -11,7 +12,9 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonCardContent,
+  IonSelectOption,
   IonButton,
+  IonList,
   LoadingController,
   IonLoading,
   NavController,
@@ -35,7 +38,10 @@ import { TareasPage } from '../tareas/tareas.page';
     IonInput,
     IonCard,
     IonCardHeader,
+    IonSelectOption,
+    IonList,
     IonCardTitle,
+    CommonModule,
     IonCardContent,
     IonButton,
     IonLoading,
@@ -46,20 +52,24 @@ export class HomePage implements OnInit {
   txt_usuario: string = '';
   txt_clave: string = '';
   msgWS: string = '';
+  proyectos: any[] = [];
+  tareas: any[] = [];
 
   constructor(
     private loadingCtrl: LoadingController,
     private servicio: ServicioService,
-    private navCtrl: NavController, // Inyecta NavController
+    private navCtrl: NavController,
     private modalCtrl: ModalController
   ) {}
 
   ngOnInit() {
     this.restartInterface();
+    this.cargarProyectos();
+    this.cargarTareas();
   }
 
   restartInterface() {
-    this.txt_clave = '';
+    this.txt_usuario = '';
     this.txt_clave = '';
     this.msgWS = '';
     this.servicio.clearSession();
@@ -74,9 +84,8 @@ export class HomePage implements OnInit {
     console.log('datos to login: ' + JSON.stringify(datos));
 
     try {
-      const res: any = await this.servicio.postData(datos);
+      const res: any = await this.servicio.postData(datos,'tareas');
       if (res.success) {
-        //create session info with all data
         this.servicio.createSession('identificationUser', res.data.ci_persona);
         this.servicio.createSession('nameUser', res.data.nom_persona);
         this.servicio.createSession('surenameUser', res.data.ape_persona);
@@ -111,13 +120,40 @@ export class HomePage implements OnInit {
     loading.present();
   }
 
-  // Método para abrir la página de tareas
   insertarTarea() {
-    this.navCtrl.navigateForward('/tareas'); // Navega a la ruta 'tareas'
-  }
-  // Método para abrir la página de proyectos
-  insertarProyecto() {
-    this.navCtrl.navigateForward('/proyectos'); // Navega a la ruta 'proyectos'
+    this.navCtrl.navigateForward('/tareas');
   }
 
+  insertarProyecto() {
+    this.navCtrl.navigateForward('/proyectos');
+  }
+
+  // 🔹 Cargar la lista de proyectos
+  async cargarProyectos() {
+    try {
+      const res: any = await this.servicio.obtenerProyectos();
+      if (res) {
+        this.proyectos = res;
+      } else {
+        console.log('Error al obtener proyectos:', res.message);
+      }
+    } catch (error) {
+      console.log('Error en la consulta de proyectos:', error);
+    }
+  }
+
+  // 🔹 Cargar la lista de tareas
+  async cargarTareas() {
+    try {
+      const res: any = await this.servicio.obtenerTareas();
+      if (res) {
+        this.tareas = res;
+        console.log('Tareas cargadas:', this.tareas);
+      } else {
+        console.log('Error al obtener tareas:', res.message);
+      }
+    } catch (error) {
+      console.log('Error en la consulta de tareas:', error);
+    }
+  }
 }

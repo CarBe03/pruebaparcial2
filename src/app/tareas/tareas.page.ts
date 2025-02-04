@@ -58,8 +58,8 @@ cancelar() {
   async obtenerTareas() {
     let datos = { op: 'getTareas' };
     try {
-      const res: any = await this.servicio.postData(datos);
-      if (res.success) {
+      const res: any = await this.servicio.postData(datos,'tareas');
+      if (res) {
         this.tareas = res.data;
       } else {
         console.log('Error al obtener tareas:', res.message);
@@ -78,7 +78,7 @@ async insertarTarea() {
   }
 
   let datos = {
-    op: 'insertTarea',
+    op: 'insertar',
     nombretarea: this.nombretarea,
     fechatarea: this.fechatarea,
     estadotarea: this.estadotarea || 'pendiente', // Valor predeterminado si no se selecciona estado
@@ -87,11 +87,11 @@ async insertarTarea() {
   };
 
   try {
-    const res: any = await this.servicio.postData(datos);
+    const res: any = await this.servicio.postData(datos,'tareas');
     console.log('Respuesta del servidor:', res);
 
     // Verificar que la respuesta no sea null o indefinida
-    if (res && res.success) {
+    if (res) {
       this.servicio.showToast('Tarea agregada exitosamente', 2000);
       
       // Si obtenerTareas() es asíncrona, usar await
@@ -122,7 +122,7 @@ async insertarTarea() {
       };
 
       try {
-        const res: any = await this.servicio.postData(datos);
+        const res: any = await this.servicio.postData(datos,'tareas');
         if (res.success) {
           this.servicio.showToast('Tarea actualizada exitosamente', 2000);
           this.obtenerTareas();
@@ -143,7 +143,7 @@ async insertarTarea() {
     let datos = { op: 'deleteTarea', idtarea: idtarea };
 
     try {
-      const res: any = await this.servicio.postData(datos);
+      const res: any = await this.servicio.postData(datos,'tareas');
       if (res.success) {
         this.servicio.showToast('Tarea eliminada exitosamente', 2000);
         this.obtenerTareas();

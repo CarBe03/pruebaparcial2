@@ -10,15 +10,16 @@ import {
   IonInput,
   ModalController,
   IonButton,
+  IonCardContent,
   IonItem,
   IonItemGroup,
   IonItemDivider,
+  IonCardTitle,
   IonSelect,
   IonSelectOption,
   NavController,
   IonList,
-  IonCard,
-} from '@ionic/angular/standalone';
+  IonCard, IonCardHeader } from '@ionic/angular/standalone';
 import { ServicioService } from '../services/servicio.service';
 
 @Component({
@@ -26,13 +27,15 @@ import { ServicioService } from '../services/servicio.service';
   templateUrl: './proyectos.page.html',
   styleUrls: ['./proyectos.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonCardHeader, 
     IonCard,
     IonContent,
     IonHeader,
     IonTitle,
+    IonCardTitle,
     IonToolbar,
     CommonModule,
+    IonCardContent,
     FormsModule,
     IonLabel,
     IonInput,
@@ -62,6 +65,7 @@ export class ProyectosPage implements OnInit {
 
   ngOnInit() {
     this.obtenerProyectos();
+   
   }
 
  /* cancelar() {
@@ -72,7 +76,7 @@ export class ProyectosPage implements OnInit {
   async obtenerProyectos() {
     let datos = { op: 'getProyectos' };
     try {
-      const res: any = await this.servicio.postData(datos);
+      const res: any = await this.servicio.postData(datos,'proyectos');
       if (res.success) {
         this.proyectos = res.data;
       } else {
@@ -92,20 +96,21 @@ export class ProyectosPage implements OnInit {
     }
 
     let datos = {
-      op: 'insertProyecto',
+      op: 'insertar',
       nombreproyecto: this.nombreproyecto,
       fechaproyecto: this.fechaproyecto,
       estadoproyecto: this.estadoproyecto || 'pendiente', // Valor predeterminado si no se selecciona estado
       materiaproyecto: this.materiaproyecto,
       documentosproyecto: this.documentosproyecto,
     };
-
+    //-
+    console.log('Solicitud servidor:', datos);
     try {
-      const res: any = await this.servicio.postData(datos);
+      const res: any = await this.servicio.postData(datos,'proyectos');
       console.log('Respuesta del servidor:', res);
 
       // Verificar que la respuesta no sea null o indefinida
-      if (res && res.success) {
+      if (res) {
         this.servicio.showToast('Proyecto agregado exitosamente', 2000);
 
         // Si obtenerProyectos() es asíncrona, usar await
@@ -123,6 +128,15 @@ export class ProyectosPage implements OnInit {
   cancel() {
     this.navCtrl.navigateBack('/home');
   }
+  seleccionarProyecto(proyecto: any) {
+    this.idproyecto = proyecto.idproyecto;
+    this.nombreproyecto = proyecto.nombreproyecto;
+    this.fechaproyecto = proyecto.fechaproyecto;
+    this.estadoproyecto = proyecto.estadoproyecto;
+    this.materiaproyecto = proyecto.materiaproyecto;
+    this.documentosproyecto = proyecto.documentosproyecto;
+  }
+  
   // 🔹 Actualizar un proyecto existente
   async actualizarProyecto() {
     if (
@@ -132,7 +146,7 @@ export class ProyectosPage implements OnInit {
       this.materiaproyecto
     ) {
       let datos = {
-        op: 'updateProyecto',
+        op: 'actualizar',
         idproyecto: this.idproyecto,
         nombreproyecto: this.nombreproyecto,
         fechaproyecto: this.fechaproyecto,
@@ -142,7 +156,7 @@ export class ProyectosPage implements OnInit {
       };
 
       try {
-        const res: any = await this.servicio.postData(datos);
+        const res: any = await this.servicio.postData(datos,'proyectos');
         if (res.success) {
           this.servicio.showToast('Proyecto actualizado exitosamente', 2000);
           this.obtenerProyectos();
@@ -160,10 +174,10 @@ export class ProyectosPage implements OnInit {
 
   // 🔹 Eliminar un proyecto
   async eliminarProyecto(idproyecto: number) {
-    let datos = { op: 'deleteProyecto', idproyecto: idproyecto };
+    let datos = { op: 'eliminar', idproyecto: idproyecto };
 
     try {
-      const res: any = await this.servicio.postData(datos);
+      const res: any = await this.servicio.postData(datos,'proyectos');
       if (res.success) {
         this.servicio.showToast('Proyecto eliminado exitosamente', 2000);
         this.obtenerProyectos();

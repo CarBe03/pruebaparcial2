@@ -1,10 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Evaluación </ion-title>
+    <ion-title>Evaluación</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true"> 
   <div id="contenedor">
     <!-- Card para Insertar Nueva Tarea -->
     <ion-card color="dark">
@@ -33,5 +33,36 @@
         </ion-item>
       </ion-card-content>
     </ion-card>
+
+
+    <!-- Lista de Proyectos -->
+   -- <ion-card color="light">
+      <ion-card-header>
+        <ion-card-title>Lista de Proyectos</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let proyecto of proyectos">
+            <ion-label>{{ proyecto.nombreproyecto }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+<!--no borrar-->
+    <!-- Lista de Tareas -->
+     
+    <ion-card color="light">
+      <ion-card-header>
+        <ion-card-title>Lista de Tareas</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let tarea of tareas">
+            <ion-label>{{ tarea.nombretarea }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
+

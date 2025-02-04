@@ -8,16 +8,23 @@ import { firstValueFrom } from 'rxjs';
   providedIn: 'root',
 })
 export class ServicioService {
-  server: string = 'http://localhost/BDDPrueba2/controllers/tareas.controller.php?';
+  servert: string = 'http://localhost/BDDPrueba2/controllers/tareas.controller.php?';
+  serverp: string = 'http://localhost/BDDPrueba2/controllers/proyectos.controller.php?';
+  server: string = '';
 
   constructor(public toastCtrl: ToastController, public http: HttpClient) {}
 
   // 🔹 Método para enviar datos al servidor (POST request)
-  async postData(body: any) {
+  async postData(body: any,tipo: 'tareas'|'proyectos') {
     let head = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' });
     let options = { headers: head };
 
     try {
+      if (tipo === 'tareas') {
+        this.server = this.servert;
+      } else if (tipo === 'proyectos') {
+        this.server = this.serverp;
+      }
       const response = await firstValueFrom(this.http.post(this.server, JSON.stringify(body), options));
       console.log('Respuesta del Servidor:', JSON.stringify(response));
       return response;
@@ -29,27 +36,29 @@ export class ServicioService {
 
   // 🔹 Método para obtener tareas
   async obtenerTareas() {
-    let datos = { op: 'getTareas' };
-    return await this.postData(datos);
+    let datos = { op: 'todos' };
+    return await this.postData(datos,'tareas');
   }
+//
 
+//
   // 🔹 Insertar nueva tarea
   async insertarTarea(nombretarea: string, fechatarea: string, estadotarea: string, materiatarea: string, idproyecto: number | null) {
     let datos = {
-      op: 'insertTarea',
+      op: 'insertar',
       nombretarea,
       fechatarea,
       estadotarea,
       materiatarea,
       idproyecto
     };
-    return await this.postData(datos);
+    return await this.postData(datos,'tareas');
   }
 
   // 🔹 Actualizar tarea
   async actualizarTarea(idtarea: number, nombretarea: string, fechatarea: string, estadotarea: string, materiatarea: string, idproyecto: number | null) {
     let datos = {
-      op: 'updateTarea',
+      op: 'actualizar',
       idtarea,
       nombretarea,
       fechatarea,
@@ -57,31 +66,37 @@ export class ServicioService {
       materiatarea,
       idproyecto
     };
-    return await this.postData(datos);
+    return await this.postData(datos,'tareas');
   }
 
   // 🔹 Eliminar tarea
   async eliminarTarea(idtarea: number) {
     let datos = { op: 'deleteTarea', idtarea };
-    return await this.postData(datos);
+    return await this.postData(datos,'tareas');
   }
+  // 🔹 Método para obtener proyectos
+  async obtenerProyectos() {
+    let datos = { op: 'todos' };
+    return await this.postData(datos,'proyectos');
+  }
+    
 // 🔹 Insertar nuevo proyecto
 async insertarProyecto(nombreproyecto: string, fechaproyecto: string, estadoproyecto: string, materiaproyecto: string, documentosproyecto: string) {
   let datos = {
-    op: 'insertProyecto',
+    op: 'insertar',
     nombreproyecto,
     fechaproyecto,
     estadoproyecto,
     materiaproyecto,
     documentosproyecto
   };
-  return await this.postData(datos);
+  return await this.postData(datos,'proyectos');
 }
 
 // 🔹 Actualizar proyecto
 async actualizarProyecto(idproyecto: number, nombreproyecto: string, fechaproyecto: string, estadoproyecto: string, materiaproyecto: string, documentosproyecto: string) {
   let datos = {
-    op: 'updateProyecto',
+    op: 'actualizar',
     idproyecto,
     nombreproyecto,
     fechaproyecto,
@@ -89,13 +104,13 @@ async actualizarProyecto(idproyecto: number, nombreproyecto: string, fechaproyec
     materiaproyecto,
     documentosproyecto
   };
-  return await this.postData(datos);
+  return await this.postData(datos,'proyectos');
 }
 
 // 🔹 Eliminar proyecto
 async eliminarProyecto(idproyecto: number) {
-  let datos = { op: 'deleteProyecto', idproyecto };
-  return await this.postData(datos);
+  let datos = { op: 'eliminar', idproyecto };
+  return await this.postData(datos,'proyectos');
 }
   // 🔹 Mostrar mensaje de notificación
   async showToast(msg: string, showtime: number) {
